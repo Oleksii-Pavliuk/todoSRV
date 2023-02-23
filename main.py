@@ -46,9 +46,10 @@ def getUsers(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           rows = result.fetchall()
+          return json.dumps({"data": [dict(row) for row in rows]}), 200, {'Content-Type': 'application/json'}
     except Exception as e:
-        return json.dumps('Error: {}'.format(str(e)))
-    return json.dumps(rows), 200, {'Content-Type': 'application/json'}
+        error_msg = "An error occurred while retrieving data: {}".format(str(e))
+        return json.dumps({"error": error_msg}), 500, {'Content-Type': 'application/json'}
 
 
 # Add user
