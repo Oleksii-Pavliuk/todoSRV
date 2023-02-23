@@ -179,7 +179,7 @@ def changeTask(request):
     id = params['id']
 
     # Execute query
-    stmt = sqlalchemy.text('UPDATE tasks SET done = True WHERE id = :id;')
+    stmt = sqlalchemy.text('UPDATE tasks SET done = true, done_date = CURRENT_TIMESTAMP WHERE id = :id;')
     stmt = stmt.bindparams(id=id)
     
     db = getDB()
@@ -200,7 +200,7 @@ def deleteTask(request):
     id = params['id']
 
     # Execute query
-    stmt = sqlalchemy.text('DELETE FROM tasks WHERE id = :id;')
+    stmt = sqlalchemy.text('UPDATE tasks SET deleted=true WHERE id = :id;')
     stmt = stmt.bindparams(id=id)
     
     db = getDB()
