@@ -25,5 +25,5 @@ jobs:
     - id: 'deploy'
       uses: 'google-github-actions/deploy-cloud-functions@v1'
       with:
-        name: 'getUser'
+        name: 'getUsers'
         runtime: 'python310'
