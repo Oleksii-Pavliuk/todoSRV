@@ -1,0 +1,191 @@
+# This file contains all the code used in the codelab. 
+
+from database import getDB
+import sqlalchemy
+import json
+
+
+
+
+
+
+#############################
+# 
+#       USER FUNCTIONS
+#
+##############################
+  
+
+# Get users 
+def getUsers(request):
+
+    stmt = sqlalchemy.text('SELECT * FROM users')
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+        data = conn.fetchall()
+    except Exception as e:
+        return json.dumps('Error: {}'.format(str(e)))
+    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+
+
+# Add user
+def addUsers(request):
+  # Get request params
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+
+    # Execute query
+    stmt = sqlalchemy.text('insert into users (username, password) values (:username, :password)')
+    stmt = stmt.bindparams(username=username, password=password)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+
+# Delete user
+def deleteUser(request):
+  # Get request params
+    params = request.get_json()
+    username = params['username']
+
+    # Execute query
+    stmt = sqlalchemy.text('DELETE FROM users WHERE username = :username')
+    stmt = stmt.bindparams(username=username)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+##############################
+# 
+#       TASKS FUNCTIONS
+#
+##############################
+
+# Get tasks 
+def getTask(request):
+
+    params = request.get_json()
+    user = params['user']
+
+    stmt = sqlalchemy.text('SELECT * FROM tasks WHERE user = :user')
+    stmt = stmt.bindparams( user=user )
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+        data = conn.fetchall()
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+
+
+# Add task
+def addTask(request):
+  # Get request params
+    params = request.get_json()
+    name = params['name']
+    description = params['description']
+
+    # Execute query
+    stmt = sqlalchemy.text('insert into tasks (name, description) values (:name, :description)')
+    stmt = stmt.bindparams(name=name , description = description)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+
+
+#Edit task
+def editTask(request):
+  # Get request params
+    params = request.get_json()
+    id = params['id']
+    name = params['name']
+    description = params['description']
+
+    # Execute query
+    if(not description and name):
+      stmt = sqlalchemy.text('UPDATE tasks SET name = :name WHERE id = :id;')
+      stmt = stmt.bindparams(name=name, id=id)
+    if(not name and description):
+      stmt = sqlalchemy.text('UPDATE tasks SET description = :description WHERE id = :id;')
+      stmt = stmt.bindparams(description = description, id=id)
+    else:
+      stmt = sqlalchemy.text('UPDATE tasks SET name = :name, description = :description WHERE id = :id;')
+      stmt = stmt.bindparams(name=name , description = description, id=id)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+
+
+#Change task
+def changeTask(request):
+  # Get request params
+    params = request.get_json()
+    id = params['id']
+
+    # Execute query
+    stmt = sqlalchemy.text('UPDATE tasks SET done = True WHERE id = :id;')
+    stmt = stmt.bindparams(id=id)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+
+
+#Delete task
+def deleteTask(request):
+  # Get request params
+    params = request.get_json()
+    id = params['id']
+
+    # Execute query
+    stmt = sqlalchemy.text('DELETE FROM tasks WHERE id = :id;')
+    stmt = stmt.bindparams(id=id)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+            conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
