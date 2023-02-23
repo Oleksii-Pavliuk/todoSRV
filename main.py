@@ -35,7 +35,7 @@ def getDB():
 ##############################
   
 
-# Get users 
+# Get users V
 def getUsers(request):
 
     stmt = sqlalchemy.text('SELECT * FROM users')
@@ -52,7 +52,7 @@ def getUsers(request):
         return json.dumps({"error": error_msg}), 500, {'Content-Type': 'application/json'}
 
 
-# Add user
+# Add user V
 def addUser(request):
   # Get request params
     params = request.get_json()
@@ -73,7 +73,7 @@ def addUser(request):
     return 'ok', 200
 
 
-# Delete user
+# Delete user V
 def deleteUser(request):
   # Get request params
     params = request.get_json()
@@ -98,14 +98,14 @@ def deleteUser(request):
 #
 ##############################
 
-# Get tasks 
-def getTask(request):
+# Get tasks V
+def getTasks(request):
 
     params = request.get_json()
-    user = params['user']
+    user_id = params['user_id']
 
-    stmt = sqlalchemy.text('SELECT * FROM tasks WHERE user = :user')
-    stmt = stmt.bindparams( user=user )
+    stmt = sqlalchemy.text('SELECT * FROM tasks WHERE user_id = :user_id')
+    stmt = stmt.bindparams( user_id=user_id )
     
     db = getDB()
     try:
@@ -125,11 +125,11 @@ def addTask(request):
     params = request.get_json()
     name = params['name']
     description = params['description']
-    id = params['id']
+    user_id = params['user_id']
 
     # Execute query
-    stmt = sqlalchemy.text('insert into tasks (name, description, user_id ) values (:name, :description, :id)')
-    stmt = stmt.bindparams(name=name , description = description, id = id)
+    stmt = sqlalchemy.text('insert into tasks (name, description, user_id ) values (:name, :description, :user_id)')
+    stmt = stmt.bindparams(name=name , description = description, user_id = user_id)
     
     db = getDB()
     try:
