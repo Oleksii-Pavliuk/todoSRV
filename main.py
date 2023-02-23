@@ -125,10 +125,11 @@ def addTask(request):
     params = request.get_json()
     name = params['name']
     description = params['description']
+    id = params['id']
 
     # Execute query
-    stmt = sqlalchemy.text('insert into tasks (name, description) values (:name, :description)')
-    stmt = stmt.bindparams(name=name , description = description)
+    stmt = sqlalchemy.text('insert into tasks (name, description, user_id ) values (:name, :description, :id)')
+    stmt = stmt.bindparams(name=name , description = description, id = id)
     
     db = getDB()
     try:
