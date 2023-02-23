@@ -1,11 +1,30 @@
 # This file contains all the code used in the codelab. 
-
-from database import getDB
 import sqlalchemy
 import json
 
 
 
+def getDB():
+
+  connection_name='optimal-life-378201:australia-southeast1:todo-database'
+  db_name='todo'
+  db_user='postgres'
+  db_password ='*E5y]~{=ge@d{^,g'
+  driver_name = 'postgresql+pg8000'
+  query_string =  dict({"unix_sock": "/cloudsql/{}/.s.PGSQL.5432".format(connection_name)})
+  return sqlalchemy.create_engine(
+          sqlalchemy.engine.url.URL(
+            drivername=driver_name,
+            username=db_user,
+            password=db_password,
+            database=db_name,
+            query=query_string,
+          ),
+          pool_size=5,
+          max_overflow=2,
+          pool_timeout=30,
+          pool_recycle=1800
+        )
 
 
 

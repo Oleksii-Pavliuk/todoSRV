@@ -2,4 +2,4 @@
 
 In here im using GCP PostgreSQL and Python Cloud functions as an API for angular app
 
-Deployment of individual function on push , specifiying ```FUNCTION ``` in *.env*
+Deployment of individual function on push , specifiying ```name ``` in *.github/workflows/main.yaml*
