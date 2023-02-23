@@ -1,6 +1,7 @@
 # This file contains all the code used in the codelab. 
 import sqlalchemy
 import json
+from datetime import date, datetime
 
 
 
@@ -92,6 +93,12 @@ def deleteUser(request):
         return 'Error: {}'.format(str(e))
     return 'ok', 200
 
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
 ##############################
 # 
 #       TASKS FUNCTIONS
@@ -113,13 +120,13 @@ def getTasks(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           rows = result.fetchall()
-          return json.dumps({"data": [dict(row) for row in rows]}), 200, {'Content-Type': 'application/json'}
+          return json.dumps({"data": [dict(row) for row in rows]}, default=json_serial), 200, {'Content-Type': 'application/json'}
     except Exception as e:
         error_msg = "An error occurred while retrieving data: {}".format(str(e))
         return json.dumps({"error": error_msg}), 500, {'Content-Type': 'application/json'}
 
 
-# Add task
+# Add task V
 def addTask(request):
   # Get request params
     params = request.get_json()
