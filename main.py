@@ -43,12 +43,12 @@ def getUsers(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
-        data = cursor.fetchall()
+        with db.connect() as conn:
+          result = conn.execute(stmt)
+          rows = result.fetchall()
     except Exception as e:
         return json.dumps('Error: {}'.format(str(e)))
-    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+    return json.dumps(rows), 200, {'Content-Type': 'application/json'}
 
 
 # Add user
@@ -65,8 +65,8 @@ def addUsers(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200
@@ -85,8 +85,8 @@ def deleteUser(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200
@@ -109,12 +109,12 @@ def getTask(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
-        data = cursor.fetchall()
+        with db.connect() as conn:
+          result = conn.execute(stmt)
+          rows = result.fetchall()
     except Exception as e:
         return 'Error: {}'.format(str(e))
-    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+    return json.dumps(rows), 200, {'Content-Type': 'application/json'}
 
 
 # Add task
@@ -131,8 +131,8 @@ def addTask(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200
@@ -161,8 +161,8 @@ def editTask(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200
@@ -182,8 +182,8 @@ def changeTask(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200
@@ -203,8 +203,8 @@ def deleteTask(request):
     db = getDB()
     try:
         # Exequte query and send responce
-        cursor = db.cursor()
-        cursor.execute(stmt)
+        with db.connect() as conn:
+          result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e))
     return 'ok', 200

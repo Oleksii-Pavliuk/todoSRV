@@ -27,3 +27,4 @@ jobs:
       with:
         name: 'getUsers'
         runtime: 'python310'
+        region: 'australia-southeast1'
