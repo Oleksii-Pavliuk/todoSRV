@@ -25,6 +25,6 @@ jobs:
     - id: 'deploy'
       uses: 'google-github-actions/deploy-cloud-functions@v1'
       with:
-        name: 'deleteTask'
+        name: 'changeTask'
         runtime: 'python310'
         region: 'australia-southeast1'
