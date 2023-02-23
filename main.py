@@ -52,7 +52,7 @@ def getUsers(request):
 
 
 # Add user
-def addUsers(request):
+def addUser(request):
   # Get request params
     params = request.get_json()
     username = params['username']
