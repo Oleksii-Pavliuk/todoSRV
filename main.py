@@ -28,6 +28,13 @@ def getDB():
         )
 
 
+#serialising dattime format 
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
 
 #############################
 # 
@@ -93,12 +100,7 @@ def deleteUser(request):
         return 'Error: {}'.format(str(e))
     return 'ok', 200
 
-def json_serial(obj):
-    """JSON serializer for objects not serializable by default json code"""
 
-    if isinstance(obj, (datetime, date)):
-        return obj.isoformat()
-    raise TypeError ("Type %s not serializable" % type(obj))
 ##############################
 # 
 #       TASKS FUNCTIONS
@@ -149,7 +151,7 @@ def addTask(request):
 
 
 
-#Edit task
+#Edit task V
 def editTask(request):
   # Get request params
     params = request.get_json()
@@ -179,7 +181,7 @@ def editTask(request):
 
 
 
-#Change task
+#Change task( make it done)  V
 def changeTask(request):
   # Get request params
     params = request.get_json()
@@ -200,7 +202,28 @@ def changeTask(request):
 
 
 
-#Delete task
+#Translate task(log translation)  
+def translateTask(request):
+  # Get request params
+    params = request.get_json()
+    id = params['id']
+
+    # Execute query
+    stmt = sqlalchemy.text('UPDATE tasks SET translated = true, translated_date = CURRENT_TIMESTAMP WHERE id = :id;')
+    stmt = stmt.bindparams(id=id)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+          result = conn.execute(stmt)
+    except Exception as e:
+        return 'Error: {}'.format(str(e))
+    return 'ok', 200
+
+
+
+#Delete task V 
 def deleteTask(request):
   # Get request params
     params = request.get_json()
