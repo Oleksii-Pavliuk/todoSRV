@@ -80,7 +80,34 @@ def addUser(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
+    return 'ok', 200
+
+
+# Check user
+def checkUser(request):
+  # Get request params
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
+
+    if( not username and not password):
+      return 'Wrong request'
+
+    # Execute query
+    stmt = sqlalchemy.text('SELECT * FROM users WHERE username = :username')
+    stmt = stmt.bindparams(username=username, password=password)
+    
+    db = getDB()
+    try:
+        # Exequte query and send responce
+        with db.connect() as conn:
+          result = conn.execute(stmt)
+          data = result.fetchall()
+          if ( username != data["username" or password != data["password"]]):
+                return ("bad request"), 400
+    except Exception as e:
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -103,7 +130,7 @@ def deleteUser(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -158,7 +185,7 @@ def addTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -191,7 +218,7 @@ def editTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -214,7 +241,7 @@ def changeTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -238,7 +265,7 @@ def translateTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200
 
 
@@ -261,5 +288,5 @@ def deleteTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return 'Error: {}'.format(str(e)),500
     return 'ok', 200

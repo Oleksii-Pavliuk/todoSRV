@@ -1,5 +1,4 @@
 import axios from 'axios';
-import test from 'node:test';
 
 
 async function runTests() {
@@ -10,6 +9,7 @@ async function runTests() {
   let functions = [
     getUsers(success,errors),
     addUser(success,errors), 
+    checkUser(success,errors),
     getTasks(success,errors),
     changeTask(success,errors),
     addTask(success,errors),
@@ -67,13 +67,37 @@ function addUser(success : string[] ,errors: string[]) {
   
     return axios.request(options)
       .then(function (response: any) {
-        success.push('addUser')
+        success.push('checkUser')
       })
       .catch(function (error: any) {
         console.error(error)
-        errors.push('addUser');
+        errors.push('checkUser');
       });
   }
+
+
+// Add test user
+function checkUser(success : string[] ,errors: string[]) {
+  const options = {
+    method: 'POST',
+    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/checkUser',
+    data: {"username" : "test",
+          "password" : "test"
+      },
+    headers: {
+        "Content-Type": "application/json"
+      },
+  };
+
+  return axios.request(options)
+    .then(function (response: any) {
+      success.push('addUser')
+    })
+    .catch(function (error: any) {
+      console.error(error)
+      errors.push('addUser');
+    });
+}
 
 
 // Get all tasks from user 1 
