@@ -67,6 +67,9 @@ def addUser(request):
     username = params['username']
     password = params['password']
 
+    if( not username and not password):
+      return 'Wrong request'
+
     # Execute query
     stmt = sqlalchemy.text('insert into users (username, password) values (:username, :password)')
     stmt = stmt.bindparams(username=username, password=password)
@@ -86,6 +89,9 @@ def deleteUser(request):
   # Get request params
     params = request.get_json()
     username = params['username']
+
+    if( not username):
+      return 'Wrong request'
 
     # Execute query
     stmt = sqlalchemy.text('DELETE FROM users WHERE username = :username')
@@ -113,6 +119,9 @@ def getTasks(request):
     params = request.get_json()
     user_id = params['user_id']
 
+    if( not user_id):
+      return 'Wrong request'
+
     stmt = sqlalchemy.text('SELECT * FROM tasks WHERE user_id = :user_id')
     stmt = stmt.bindparams( user_id=user_id )
     
@@ -135,6 +144,9 @@ def addTask(request):
     name = params['name']
     description = params['description']
     user_id = params['user_id']
+
+    if( not user_id and not name and not description):
+      return 'Wrong request'
 
     # Execute query
     stmt = sqlalchemy.text('insert into tasks (name, description, user_id ) values (:name, :description, :user_id)')
@@ -159,11 +171,14 @@ def editTask(request):
     name = params['name']
     description = params['description']
 
+
     # Execute query
-    if(not description and name):
+    if( not id and not name and  not description):
+      return 'Wrong request'
+    elif (not description and name):
       stmt = sqlalchemy.text('UPDATE tasks SET name = :name WHERE id = :id;')
       stmt = stmt.bindparams(name=name, id=id)
-    if(not name and description):
+    elif(not name and description):
       stmt = sqlalchemy.text('UPDATE tasks SET description = :description WHERE id = :id;')
       stmt = stmt.bindparams(description = description, id=id)
     else:
@@ -186,6 +201,8 @@ def changeTask(request):
   # Get request params
     params = request.get_json()
     id = params['id']
+    if( not id):
+      return 'Wrong request'
 
     # Execute query
     stmt = sqlalchemy.text('UPDATE tasks SET done = true, done_date = CURRENT_TIMESTAMP WHERE id = :id;')
@@ -202,11 +219,14 @@ def changeTask(request):
 
 
 
-#Translate task(log translation)  
+#Translate task(log translation)  V
 def translateTask(request):
   # Get request params
     params = request.get_json()
     id = params['id']
+
+    if( not id):
+      return 'Wrong request'
 
     # Execute query
     stmt = sqlalchemy.text('UPDATE tasks SET translated = true, translated_date = CURRENT_TIMESTAMP WHERE id = :id;')
@@ -229,6 +249,8 @@ def deleteTask(request):
     params = request.get_json()
     id = params['id']
 
+    if( not id):
+      return 'Wrong request'
     # Execute query
     stmt = sqlalchemy.text('UPDATE tasks SET deleted=true WHERE id = :id;')
     stmt = stmt.bindparams(id=id)

@@ -17,4 +17,5 @@ text.txt
 node_modules
 #!include:.gitignore
 README.md
+tests
  
