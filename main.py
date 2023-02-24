@@ -54,7 +54,7 @@ def getUsers(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           rows = result.fetchall()
-          return json.dumps({"data": [dict(row) for row in rows]}), 200, {'Content-Type': 'application/json'}
+          return json.dumps([dict(row) for row in rows]), 200, {'Content-Type': 'application/json'}
     except Exception as e:
         error_msg = "An error occurred while retrieving data: {}".format(str(e))
         return json.dumps({"error": error_msg}), 500, {'Content-Type': 'application/json'}
@@ -104,7 +104,7 @@ def checkUser(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           data = result.fetchall()
-          if ( username != data["username" or password != data["password"]]):
+          if ( username != data[0]["username" or password != data["password"]]):
                 return ("bad request"), 400
     except Exception as e:
         return 'Error: {}'.format(str(e)),500

@@ -76,7 +76,7 @@ function addUser(success : string[] ,errors: string[]) {
   }
 
 
-// Add test user
+// check test user
 function checkUser(success : string[] ,errors: string[]) {
   const options = {
     method: 'POST',
@@ -91,11 +91,11 @@ function checkUser(success : string[] ,errors: string[]) {
 
   return axios.request(options)
     .then(function (response: any) {
-      success.push('addUser')
+      success.push('checkUser')
     })
     .catch(function (error: any) {
       console.error(error)
-      errors.push('addUser');
+      errors.push('checkUser');
     });
 }
 
