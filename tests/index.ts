@@ -9,13 +9,13 @@ async function runTests() {
   let functions = [
     getUsers(success,errors),
     addUser(success,errors), 
-    checkUser(success,errors),
     getTasks(success,errors),
     changeTask(success,errors),
     addTask(success,errors),
     editTask(success,errors),
     translateTask(success,errors),
     deleteTask(success,errors),
+    checkUser(success,errors),
     deleteUser(success,errors)
   ]
 

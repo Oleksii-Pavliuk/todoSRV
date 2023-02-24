@@ -96,7 +96,7 @@ def checkUser(request):
 
     # Execute query
     stmt = sqlalchemy.text('SELECT * FROM users WHERE username = :username')
-    stmt = stmt.bindparams(username=username, password=password)
+    stmt = stmt.bindparams(username=username)
     
     db = getDB()
     try:
@@ -104,7 +104,7 @@ def checkUser(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           data = result.fetchall()
-          if ( username != data[0]["username" or password != data["password"]]):
+          if ( username != data[0]["username" or password != data[0]["password"]]):
                 return ("bad request"), 400
     except Exception as e:
         return 'Error: {}'.format(str(e)),500
