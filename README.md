@@ -10,3 +10,19 @@ DB ER diagram:
 
 
 Deployment of individual function on push , specifiying name of function at```name ``` in *.github/workflows/main.yaml*
+
+
+
+
+
+### Testing deployed functions with automated testing
+
+  Automated deploy of cloud functions via github actions do not allow to specify functions access so they throw error on all unathorised requests by default.
+    
+  So if we need to run automated tests we need to change pemissions for function after auto delpoyment. To do this we need to go to GCP console and
+  change permissions manualy. 
+  
+  To do this go : 
+  
+**GCP console -> Dashboard -> Cloud Functions -> <Function_Name> -> Permissions -> Click GRANT ACCES -> in New Principals specify : allUsers , in Role specify : Cloud Functions Invoker -> Click Save**
+    <img width="818" alt="Screenshot 2023-02-24 at 2 00 08 pm" src="https://user-images.githubusercontent.com/71220725/221081388-a53938b9-c9a9-4fa8-9424-08c91d5bddc5.png">
