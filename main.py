@@ -4,6 +4,9 @@ import json
 from datetime import date, datetime
 import functions_framework
 
+import six
+from google.cloud import translate_v2 as translate
+
 
 # Get Database connection
 def getDB():
@@ -39,18 +42,6 @@ def json_serial(obj):
 
 
 
-# Send headers 
-def send_headers(request): 
-        # Allows GET requests from any origin with the Content-Type
-        # header and caches preflight response for an 3600s
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Max-Age': '3600'
-        }
-        print('OPTIONS SENT')
-        return ('', 204, headers)
 
 
 #############################
@@ -62,16 +53,25 @@ def send_headers(request):
 
 # Get users V
 def getUsers(request):
-    
+
+
+
     if request.method == 'OPTIONS':
-      send_headers(request)
-    headers = {
-            'Access-Control-Allow-Origin': '*',
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
             'Access-Control-Allow-Methods': 'POST',
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Max-Age': '3600'
-    }
+        }
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        print('OPTIONS SENT')
+        return ('', 204, headers)
 
+
+    headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
+    }
     stmt = sqlalchemy.text('SELECT * FROM users')
     
     db = getDB()
@@ -80,17 +80,28 @@ def getUsers(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
           rows = result.fetchall()
-          return json.dumps([dict(row) for row in rows]), 200, {'Content-Type': 'application/json'}
+          return json.dumps([dict(row) for row in rows]), 200, headers
     except Exception as e:
         error_msg = "An error occurred while retrieving data: {}".format(str(e))
         return json.dumps({"error": error_msg}), 500,headers
 
 
+
+
 # Add user V
 def addUser(request):
 
-    if request.method == 'OPTIONS':    
-      send_headers(request)
+    if request.method == 'OPTIONS':
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -103,7 +114,7 @@ def addUser(request):
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
@@ -117,14 +128,42 @@ def addUser(request):
           result = conn.execute(stmt)
     except Exception as e:
         return 'Error: {}'.format(str(e)),500,headers
-    return 'ok', 200,headers
+        
+
+    stmt = sqlalchemy.text('SELECT * FROM users WHERE username = :username')
+    stmt = stmt.bindparams(username=username)
+    db = getDB()
+    try:
+        # Execute query and send response
+        with db.connect() as conn:
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+            print("Data extracted, sending")
+            response = json.dumps({"data": [dict(row) for row in rows]}, default=json_serial)
+        return(response,200,headers)
+    except Exception as e:
+        error_msg = "An error occurred while retrieving data: {}".format(str(e))
+        response = json.dumps({"error": error_msg})
+        return (response, 500, headers)
+
+    
 
 
 # Check user
 def checkUser(request):
     
+
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -137,47 +176,58 @@ def checkUser(request):
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
     stmt = sqlalchemy.text('SELECT * FROM users WHERE username = :username')
     stmt = stmt.bindparams(username=username)
-    
     db = getDB()
     try:
-        # Exequte query and send responce
+        # Execute query and send response
         with db.connect() as conn:
-          result = conn.execute(stmt)
-          data = result.fetchall()
-          if ( username != data[0]["username" or password != data[0]["password"]]):
-                return ("bad request"), 400
+            result = conn.execute(stmt)
+            rows = result.fetchall()
+            print("Data extracted, sending")
+            response = json.dumps({"data": [dict(row) for row in rows]}, default=json_serial)
+        return(response,200,headers)
     except Exception as e:
-        return 'Error: {}'.format(str(e)),500
-    return 'ok', 200,headers
+        error_msg = "An error occurred while retrieving data: {}".format(str(e))
+        response = json.dumps({"error": error_msg})
+        return (response, 500, headers)
 
 
 # Delete user V
 def deleteUser(request):
     
+
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
     if content_type == 'application/json':
         request_json = request.get_json(silent=True)
-        if request_json and 'id' in request_json:
-          id = request_json['id']
+        if request_json and 'username' in request_json:
+          id = request_json['username']
         else:
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
-    stmt = sqlalchemy.text('DELETE FROM users WHERE id = :id')
+    stmt = sqlalchemy.text('DELETE FROM users WHERE username = :id')
     stmt = stmt.bindparams(id=id)
     
     db = getDB()
@@ -202,27 +252,38 @@ def getTasks(request):
 
 
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
+    
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
     if content_type == 'application/json':
+        print("content json")
         request_json = request.get_json(silent=True)
-        if request_json and 'user_id' in request_json:
-            user_id = request_json['user_id']
+        if request_json and 'username' in request_json:
+            username = request_json['username']
         else:
             raise ValueError("JSON is invalid, or missing a 'user_id' property")
-    print(str(user_id) + " extracted ")
+    print(str(username) + " extracted ")
 
     headers = {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
         'Access-Control-Allow-Methods': 'POST',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '3600'
     }
 
-    stmt = sqlalchemy.text('SELECT * FROM tasks WHERE user_id = :user_id')
-    stmt = stmt.bindparams(user_id=user_id)
+    stmt = sqlalchemy.text('SELECT * FROM tasks WHERE username = :username')
+    stmt = stmt.bindparams(username=username)
     db = getDB()
 
     try:
@@ -238,31 +299,42 @@ def getTasks(request):
         response = json.dumps({"error": error_msg})
         return (response, 500, headers)
 
+
+
+
 # Add task V
 def addTask(request):
     
-
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
     if content_type == 'application/json':
         request_json = request.get_json(silent=True)
-        if request_json and 'user_id' in request_json:
+        if request_json and 'username' in request_json:
           name = request_json['name']
           description = request_json['description']
-          user_id = request_json['user_id']
+          username = request_json['username']
         else:
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
-    stmt = sqlalchemy.text('insert into tasks (name, description, user_id ) values (:name, :description, :user_id)')
-    stmt = stmt.bindparams(name=name , description = description, user_id = user_id)
+    stmt = sqlalchemy.text('insert into tasks (name, description, username ) values (:name, :description, :username)')
+    stmt = stmt.bindparams(name=name , description = description, username = username)
     db = getDB()
     try:
         # Exequte query and send responce
@@ -278,8 +350,18 @@ def addTask(request):
 def editTask(request):
   # Get request params
     
+
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -293,7 +375,7 @@ def editTask(request):
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
@@ -320,12 +402,21 @@ def editTask(request):
 
 
 
+
 #Change task( make it done)  V
 def changeTask(request):
 
-
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -337,7 +428,7 @@ def changeTask(request):
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
 
     # Execute query
@@ -359,7 +450,17 @@ def changeTask(request):
 def translateTask(request):
 
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
+    
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -367,12 +468,35 @@ def translateTask(request):
         request_json = request.get_json(silent=True)
         if request_json and 'id' in request_json:
           id = request_json['id']
+          name = request_json['name']
+          text = request_json['text']
         else:
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
+
+    #Translates text into the target language.
+
+    translate_client = translate.Client()
+
+
+    if isinstance(text, six.binary_type):
+        text = text.decode("utf-8")
+
+    # Text can also be a sequence of strings, in which case this method
+    # will return a sequence of results for each text.
+    result = translate_client.translate(text, target_language='UK')
+    result_name = translate_client.translate(name, target_language='UK')
+
+    responce = {
+        'name' : result_name["translatedText"],
+        'text' : result["translatedText"]
+    }
+
+
+
 
     # Execute query
     stmt = sqlalchemy.text('UPDATE tasks SET translated = true, translated_date = CURRENT_TIMESTAMP WHERE id = :id;')
@@ -384,16 +508,26 @@ def translateTask(request):
         with db.connect() as conn:
           result = conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e)),500
-    return 'ok', 200,headers
+        return 'Error: {}'.format(str(e)),500,headers
+    return json.dumps(responce), 200,headers
 
 
 
 #Delete task V 
 def deleteTask(request):
   
+
     if request.method == 'OPTIONS':
-      send_headers(request)
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        print('OPTIONS SENT')
+        return ('', 204, headers)
     print("GETTING PARAMS")
     content_type = request.headers['content-type']
 
@@ -405,7 +539,7 @@ def deleteTask(request):
             raise ValueError("JSON is invalid, or missing property")
 
     headers = {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://optimal-life-378201.ts.r.appspot.com'
     }
     # Execute query
     stmt = sqlalchemy.text('UPDATE tasks SET deleted=true WHERE id = :id;')
@@ -419,3 +553,5 @@ def deleteTask(request):
     except Exception as e:
         return 'Error: {}'.format(str(e)),500
     return 'ok', 200,headers
+
+
