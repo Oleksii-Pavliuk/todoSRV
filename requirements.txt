@@ -1,4 +1,0 @@
-SQLAlchemy==1.4.40     
-pg8000==1.16.6
-functions-framework==3.*
-google-cloud-translate==2.0.1

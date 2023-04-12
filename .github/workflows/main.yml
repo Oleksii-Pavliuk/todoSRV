@@ -22,9 +22,3 @@ jobs:
         workload_identity_provider: 'projects/52282207963/locations/global/workloadIdentityPools/deploy-pool/providers/deploy-provider'
         service_account: 'a123456@optimal-life-378201.iam.gserviceaccount.com'
 
-    - id: 'deploy'
-      uses: 'google-github-actions/deploy-cloud-functions@v1'
-      with:
-        name: 'deleteUser'
-        runtime: 'python310'
-        region: 'australia-southeast1'

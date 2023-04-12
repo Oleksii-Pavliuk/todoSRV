@@ -1,6 +1,6 @@
 # Just a backend for todo app
 
-In here im using GCP PostgreSQL and Python Cloud functions as an API for angular app
+In here im using GCP PostgreSQL and TS Express server as an API for angular app
 
 
 DB ER diagram: 
