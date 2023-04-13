@@ -39,7 +39,7 @@ async function translate(text: string) {
 	const translationClient = new TranslationServiceClient();
 	// Construct request
 	const request = {
-		parent: `projects/verdant-nova-383511/locations/australia-southeast-1`,
+		parent: `projects/verdant-nova-383511/locations/australia-southeast1`,
 		contents: [text],
 		mimeType: "text/plain", // mime types: text/plain, text/html
 		sourceLanguageCode: "en",
