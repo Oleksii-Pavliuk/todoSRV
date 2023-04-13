@@ -21,7 +21,7 @@ export async function translateTask(req: Request, res: Response) {
 			name: transName,
 			text: transText,
 		};
-
+		console.log(response)
 		await db("tasks")
 			.update({
 				translated: true,
