@@ -56,7 +56,7 @@ app.use(router);
 ========*/
 
 // USer routes
-router.get("/getUsers", getUsers);
+router.post("/getUsers", getUsers);
 router.post("/addUser", addUser);
 router.post("/checkUser", checkUser);
 router.post("/deleteUser", deleteUser);

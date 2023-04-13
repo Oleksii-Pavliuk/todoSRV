@@ -51,6 +51,8 @@ async function translate(text: string) {
 	if (response.translations != undefined) {
 		for (const translation of response.translations) {
 			console.log(`Translation: ${translation.translatedText}`);
+			return translation.translatedText
 		}
+	}else{
 	}
 }
