@@ -10,7 +10,7 @@ export async function getUsers(req: Request, res : Response) {
 
 	
 	try {
-	  const rows = await db("tasks").select('*')
+	  const rows = await db("users").select('*')
 	  return res.status(200).json(rows);
 	} catch (err) {
 	  const error_msg = `An error occurred while retrieving data: ${err}`;
