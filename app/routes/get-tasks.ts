@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { QueryResult } from "pg";
 // Local modules
-import {postgreQuery} from "../db/postgres-connection"
+import {db} from "../db/postgres-connection"
 
 /* =================
    ROUTE HANDLER
@@ -13,11 +13,8 @@ export async function getTasks(req: Request, res : Response) {
 	if (username == undefined ) {
 		return res.status(400).send();
 	}
-	const selectStmt = 'SELECT * FROM tasks WHERE username = $1';
-  
 	try {
-	  const result = await postgreQuery(selectStmt, [username]);
-	  const rows = result.rows;
+	  const rows = await db("tasks").where("username", username);
 	  console.log("Data extracted, sending");
 	  return res.status(200).send({data: rows})
 	} catch (error) {

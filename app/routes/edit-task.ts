@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { QueryResult } from "pg";
 // Local modules
-import { postgreQuery } from "../db/postgres-connection";
+import { db } from "../db/postgres-connection";
 
 /* =================
    ROUTE HANDLER
@@ -14,22 +14,16 @@ export async function editTask(req: Request, res: Response) {
 		return res.status(400).send();
 	}
 
-	let query: string;
-	let params: any[];
 
-	if (name && !description) {
-		query = "UPDATE tasks SET name = $1 WHERE id = $2;";
-		params = [name, id];
-	} else if (description && !name) {
-		query = "UPDATE tasks SET description = $1 WHERE id = $2;";
-		params = [description, id];
-	} else {
-		query = "UPDATE tasks SET name = $1, description = $2 WHERE id = $3;";
-		params = [name, description, id];
-	}
 
 	try {
-		await postgreQuery(query, params);
+		if (name && !description) {
+			await db("tasks").update({ name: name }).where({ id: id });
+		} else if (description && !name) {
+			await db("tasks").update({ description: description }).where({ id: id });
+		} else {
+			 await db("tasks").update({ name: name, description: description }).where({ id: id });
+		}
 		return res.status(200).send("ok");
 	} catch (error) {
 		console.error("An error occurred while retrieving data: ", error);

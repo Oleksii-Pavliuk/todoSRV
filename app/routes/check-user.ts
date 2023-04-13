@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
 // Local modules
-import {postgreQuery} from "../db/postgres-connection"
+import {db} from "../db/postgres-connection"
 
 /* =================
    ROUTE HANDLER
@@ -14,11 +13,11 @@ export async function checkUser(req: Request, res : Response) {
 	if (username == undefined || password == undefined) {
 		return res.status(400).send();
 	}
-	const selectStmt = 'SELECT * FROM users WHERE username = $1';
-  
+
+	const selectQuery = db("users").where("username", username);
+	
 	try {
-	  const result = await postgreQuery(selectStmt, [username]);
-	  const rows = result.rows;
+	  const rows = await selectQuery;
 	  console.log("Data extracted, sending");
 	  return res.status(200).send({data: rows})
 	} catch (error) {

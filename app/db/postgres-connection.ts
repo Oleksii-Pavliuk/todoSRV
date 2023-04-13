@@ -7,7 +7,7 @@ import { Config } from "convict";
 type KnexConfigs = Config<any>;
 
 // Create a type for the `db` object to ensure that it's always a Knex instance
-let db: KnexType;
+export let db: KnexType;
 
 // createUnixSocketPool initializes a Unix socket connection pool for
 // a Cloud SQL instance of Postgres.
@@ -43,9 +43,4 @@ const createUnixSocketPool = async (configs?: KnexConfigs): Promise<KnexType> =>
 // Call `createUnixSocketPool` to initialize the `db` object
 createUnixSocketPool();
 
-export const postgreQuery = async (
-	text: string,
-	params: any[]
-  ): Promise<QueryResult> => {
-	return db.raw(text, params);
-  };
+

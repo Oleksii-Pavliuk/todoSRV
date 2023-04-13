@@ -3,7 +3,6 @@ import cors from "cors";
 import Router from "express-promise-router";
 //Local modules
 import config from "./config/config";
-import { postgreQuery } from "./db/postgres-connection";
 
 //Routes
 import { getUsers } from "./routes/get-users";

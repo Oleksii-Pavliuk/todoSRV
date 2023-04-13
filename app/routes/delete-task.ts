@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { QueryResult } from "pg";
 // Local modules
-import { postgreQuery } from "../db/postgres-connection";
+import { db} from "../db/postgres-connection";
 
 /* =================
    ROUTE HANDLER
@@ -12,11 +12,12 @@ export async function changeTask(req: Request, res: Response) {
 		return res.status(400).send();
 	}
 
-	try {
-		await postgreQuery(
-			"UPDATE tasks SET deleted=true WHERE id = $2;",
-			[id]
-		);
+	try {		
+		await db("tasks")
+		.update({
+		deleted: true
+		})
+		.where("id", id);
 		return res.status(200).send("ok");
 	} catch (error) {
 		console.error("An error occurred while retrieving data: ", error);

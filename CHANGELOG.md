@@ -23,14 +23,14 @@
   > + main.yaml file created in todoSRV
 
 
-  ***-  12.04.23 - v0.2***  Workflow in Github Actions changed to use secrets, because new GCP account used
+  ***-  12.04.23 - v0.3***  Workflow in Github Actions changed to use secrets, because new GCP account used
 
   > + Backend changed to Typescript express server from Python cloud functions
   > + Dockerfile created to build and test app container
   > + service.yaml file created to deploy to Cloud Run
 
   
-  ***-  13.04.23 - v0.2***  Database connection and manipulation fixes 
+  ***-  13.04.23 - v0.3***  Database connection and manipulation fixes 
 
   > + deploy.sh script for CI/CD created
   > + replaced pg lib with knex

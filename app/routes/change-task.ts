@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { QueryResult } from "pg";
 // Local modules
-import { postgreQuery } from "../db/postgres-connection";
+import { db} from "../db/postgres-connection";
 
 /* =================
    ROUTE HANDLER
@@ -13,10 +13,12 @@ export async function changeTask(req: Request, res: Response) {
 	}
 
 	try {
-		await postgreQuery(
-			"UPDATE tasks SET done = true, done_date = CURRENT_TIMESTAMP WHERE id =  $2;",
-			[id]
-		);
+		await db("tasks")
+		.update({
+		  done: true,
+		  done_date: db.raw("CURRENT_TIMESTAMP")
+		})
+		.where("id", id);
 		return res.status(200).send("ok");
 	} catch (error) {
 		console.error("An error occurred while retrieving data: ", error);
