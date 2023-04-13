@@ -12,9 +12,13 @@ DB ER diagram:
 
 
 
+### CI/CD
+  App will be conteinerised and container will be automaticaly deployed to Cloud Run using Github Actions by executing ```deployment.sh```
+  
+  
+ 
 
 
 ### Testing deployed app with automated testing
   All automated  tests stored in ```texts/index.ts``` and can be run by executing this file. Test outputs functions that was executed and functions where was errors, if there was error in function - then we need to add ```console.log(error)``` to ```catch``` of this function and error will be outputted 
-
 
