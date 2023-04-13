@@ -12,11 +12,11 @@
   
   ***-  22.02.23 - v0.2***  Backend finishehed and deployed
   
-  >+ main.py file created in todoSRV
+  > + main.py file created in todoSRV
  
   ***-  23.02.23 - v0.2***  Automated tests created and functions tested
   
-  >+ tests/index.ts file created in todoSRV
+  > + tests/index.ts file created in todoSRV
   
   ***-  24.02.23 - v0.2***  Workflow in Github Actions created to deploy Cloud Functions to GCP
   
@@ -25,6 +25,9 @@
 
   ***-  12.04.23 - v0.2***  Workflow in Github Actions changed to use secrets, because new GCP account used
 
-  backend changed to Typescript express server from Python cloud functions
+  > + Backend changed to Typescript express server from Python cloud functions
+  > + Dockerfile created to build and test app container
+  > + service.yaml file created to deploy to Cloud Run
+  > + deploy.sh script for CI/CD created
   
   

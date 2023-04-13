@@ -1,4 +1,4 @@
-name: Deploy Auto
+name: Deploy to Cloud run
 on:
   push:
     branches:
@@ -19,6 +19,9 @@ jobs:
       name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: 'projects/52282207963/locations/global/workloadIdentityPools/deploy-pool/providers/deploy-provider'
-        service_account: 'a123456@optimal-life-378201.iam.gserviceaccount.com'
-
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      
+    - name: Run deploy script
+      run: |
+        chmod +x deploy.sh
+        ./deploy.sh

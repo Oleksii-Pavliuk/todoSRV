@@ -35,7 +35,7 @@ const config: convict.Config<IConfigSchema> = convict({
 	pghost: {
 		doc: "The host of the postgres server",
 		format: "*",
-		default: "verdant-nova-383511:australia-southeast1:todo-postgres",
+		default: "/cloudsql/verdant-nova-383511:australia-southeast1:todo-postgres",
 		env: "PGHOST",
 		arg: "pghost",
 	},
@@ -49,7 +49,7 @@ const config: convict.Config<IConfigSchema> = convict({
 	pgdatabase: {
 		doc: "The name of the postgres databse",
 		format: String,
-		default: "todo",
+		default: "postgres",
 		env: "PGDATABASE",
 		arg: "pgdatabase",
 	},

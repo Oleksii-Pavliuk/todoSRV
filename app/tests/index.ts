@@ -36,7 +36,7 @@ for(let i=0; i<functions.length; i++) {
 function getUsers(success : string[] ,errors: string[]) {
   const options = {
     method: 'GET',
-    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/getUsers',
+    url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/getUsers',
     params: {},
     headers: {},
   };
@@ -56,7 +56,7 @@ function getUsers(success : string[] ,errors: string[]) {
 function addUser(success : string[] ,errors: string[]) {
     const options = {
       method: 'POST',
-      url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/addUser',
+      url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/addUser',
       data: {"username" : "test",
             "password" : "test"
         },
@@ -80,7 +80,7 @@ function addUser(success : string[] ,errors: string[]) {
 function checkUser(success : string[] ,errors: string[]) {
   const options = {
     method: 'POST',
-    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/checkUser',
+    url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/checkUser',
     data: {"username" : "test",
           "password" : "test"
       },
@@ -104,7 +104,7 @@ function checkUser(success : string[] ,errors: string[]) {
 function getTasks(success : string[] ,errors: string[]) {
   const options = {
     method: 'POST',
-    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/getTasks',
+    url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/getTasks',
     data: {"user_id" : 1},
     headers: {
         "Content-Type": "application/json"
@@ -126,7 +126,7 @@ function getTasks(success : string[] ,errors: string[]) {
 function addTask(success : string[] ,errors: string[]) {
   const options = {
     method: 'POST',
-    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/addTask',
+    url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/addTask',
     data: {"name" : 'test',
            "description": "test",
            "user_id": 1
@@ -150,7 +150,7 @@ function addTask(success : string[] ,errors: string[]) {
 function editTask(success : string[] ,errors: string[]) {
   const options = {
     method: 'POST',
-    url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/editTask',
+    url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/editTask',
     data: {"name" : 'test',
            "description": "test",
            "id": 1
@@ -175,7 +175,7 @@ function editTask(success : string[] ,errors: string[]) {
 function changeTask(success : string[] ,errors: string[]) {
     const options = {
       method: 'POST',
-      url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/changeTask',
+      url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/changeTask',
       data: {"id" : 1},
       headers: {
           "Content-Type": "application/json"
@@ -197,7 +197,7 @@ function changeTask(success : string[] ,errors: string[]) {
   function translateTask(success : string[] ,errors: string[]) {
     const options = {
       method: 'POST',
-      url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/translateTask',
+      url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/translateTask',
       data: {"id" : 1},
       headers: {
           "Content-Type": "application/json"
@@ -218,7 +218,7 @@ function changeTask(success : string[] ,errors: string[]) {
   function deleteTask(success : string[] ,errors: string[]) {
     const options = {
       method: 'POST',
-      url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/deleteTask',
+      url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/deleteTask',
       data: {"id" : 1},
       headers: {
           "Content-Type": "application/json"
@@ -239,7 +239,7 @@ function changeTask(success : string[] ,errors: string[]) {
   function deleteUser(success : string[] ,errors: string[]) {
     const options = {
       method: 'POST',
-      url: 'https://australia-southeast1-optimal-life-378201.cloudfunctions.net/deleteUser',
+      url: 'https://todosrv-54cbxxg5ca-ts.a.run.app/deleteUser',
       data: {"username" : "test",
         },
       headers: {

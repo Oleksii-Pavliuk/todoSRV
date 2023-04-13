@@ -62,7 +62,7 @@ router.post("/checkUser", checkUser);
 router.post("/deleteUser", deleteUser);
 
 //Tasks routes
-router.get("/getTaskss", getTasks);
+router.post("/getTasks", getTasks);
 router.post("/addTask", addTask);
 router.post("/editTask", editTask);
 router.post("/changeTask", changeTask);

@@ -1,6 +1,6 @@
 # Just a backend for todo app
 
-In here im using GCP PostgreSQL and TS Express server as an API for angular app
+In here im using GCP PostgreSQL and contenerised TS Express server running in Cloud Run as an API for angular app
 
 
 DB ER diagram: 
@@ -14,10 +14,10 @@ DB ER diagram:
 
 
 
-### Testing deployed functions with automated testing
+### Testing deployed app with automated testing
   All automated  tests stored in ```texts/index.ts``` and can be run by executing this file. Test outputs functions that was executed and functions where was errors, if there was error in function - then we need to add ```console.log(error)``` to ```catch``` of this function and error will be outputted 
 
-  Automated deploy of cloud functions via github actions do not allow to specify functions access so they throw error on all unathorised requests by default.
+  Automated deploy via github actions do not allow to specify functions access so they throw error on all unathorised requests by default.
     
   So if we need to run automated tests we need to change pemissions for function after auto delpoyment. To do this we need to go to GCP console and
   change permissions manualy. 
