@@ -6,7 +6,7 @@ import { db} from "../db/postgres-connection";
 /* =================
    ROUTE HANDLER
 ================== */
-export async function changeTask(req: Request, res: Response) {
+export async function deleteTask(req: Request, res: Response) {
 	let id = req.body.id;
 	if (id == undefined) {
 		return res.status(400).send();

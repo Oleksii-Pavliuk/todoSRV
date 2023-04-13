@@ -14,6 +14,7 @@ import { addTask } from "./routes/add-task";
 import { editTask } from "./routes/edit-task";
 import { changeTask } from "./routes/change-task";
 import { translateTask } from "./routes/translate-task";
+import { deleteTask } from "./routes/delete-task";
 
 /* =================
    SERVER SETUP
@@ -66,6 +67,7 @@ router.post("/addTask", addTask);
 router.post("/editTask", editTask);
 router.post("/changeTask", changeTask);
 router.post("/translateTask", translateTask);
+router.post("/deleteTask", deleteTask)
 
 /* =================
    SERVER START
