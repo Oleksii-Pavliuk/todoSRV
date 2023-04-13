@@ -28,6 +28,10 @@
   > + Backend changed to Typescript express server from Python cloud functions
   > + Dockerfile created to build and test app container
   > + service.yaml file created to deploy to Cloud Run
-  > + deploy.sh script for CI/CD created
+
   
+  ***-  13.04.23 - v0.2***  Database connection and manipulation fixes 
+
+  > + deploy.sh script for CI/CD created
+  > + replaced pg lib with knex
   
