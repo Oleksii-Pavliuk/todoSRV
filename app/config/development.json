@@ -4,7 +4,7 @@
   "jwtrefreshkey": "615143cdcfcafc510d53603b413ba7dc59a30e8ed35cdd3e0168cfa7562dd728ebfc92db9065d7b6646da33c2c62adaa8b34f6cb0c91ae895d5381c936114dad",
   "pguser": "postgres",
   "pgpassword": "postgres-todo",
-  "pghost": "cloudsql/verdant-nova-383511:australia-southeast1:todo-postgres",
+  "pghost": "/cloudsql/verdant-nova-383511:australia-southeast1:todo-postgres",
   "pgport": 5432,
   "pgdatabase": "postgres"
 }
