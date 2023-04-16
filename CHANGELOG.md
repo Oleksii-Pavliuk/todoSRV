@@ -35,3 +35,4 @@
   > + deploy.sh script for CI/CD created
   > + replaced pg lib with knex
   
+  ***-  16.04.23 - v0.3.1***  App now using JWT as Client authorization and file structure was improved 
