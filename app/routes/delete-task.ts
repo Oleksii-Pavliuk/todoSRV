@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
+
 // Local modules
 import { db} from "../db/postgres-connection";
 

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
+
 // Local modules
+import {User } from "../middleware/gen-token"
 import {db} from "../db/postgres-connection"
 
 /* =================
@@ -8,9 +9,9 @@ import {db} from "../db/postgres-connection"
 ================== */
 export async function deleteUser(req: Request, res : Response) {
 
-
+	let user: User = req.body.tokenUser
 	let username = req.body.username;
-	if (username == undefined) {
+	if (username == undefined || user.username !== username) {
 		return res.status(400).send();
 	}		
   

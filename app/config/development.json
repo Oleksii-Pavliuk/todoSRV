@@ -1,0 +1,10 @@
+{
+  "port": 3000,
+  "jwtkey" : "f4dcf2059daee63990c6fd340ca91317313a096b2d71aa506f916a21ac63a4b3f4942298b0787630b8732046de882879d89d4ca751604beb06c60408f87d4367",
+  "jwtrefreshkey": "615143cdcfcafc510d53603b413ba7dc59a30e8ed35cdd3e0168cfa7562dd728ebfc92db9065d7b6646da33c2c62adaa8b34f6cb0c91ae895d5381c936114dad",
+  "pguser": "postgres",
+  "pgpassword": "postgres-todo",
+  "pghost": "cloudsql/verdant-nova-383511:australia-southeast1:todo-postgres",
+  "pgport": 5432,
+  "pgdatabase": "postgres"
+}
