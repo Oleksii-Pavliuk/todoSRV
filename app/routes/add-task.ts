@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
+
 // Local modules
+import { User } from "../middleware/gen-token"
 import {db} from "../db/postgres-connection"
 
 /* =================
@@ -8,11 +9,11 @@ import {db} from "../db/postgres-connection"
 ================== */
 export async function addTask(req: Request, res : Response) {
 
-
+	let user: User = req.body.tokenUser
 	let name = req.body.name;
 	let description = req.body.description;
     let username = req.body.username;
-	if (username == undefined || name == undefined || description == undefined) {
+	if (username == undefined || name == undefined || description == undefined || user.username !== username) {
 		return res.status(400).send();
 	}
   

@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
+
 // Local modules
+import {generateAccessToken, User } from "../middleware/gen-token"
 import {db} from "../db/postgres-connection"
+
+
 
 /* =================
    ROUTE HANDLER
@@ -16,9 +19,10 @@ export async function addUser(req: Request, res : Response) {
 	
 	try {
 	  await insertQuery;
-	  const rows = await selectQuery;
+	  const rows: User[] = await selectQuery;
 	  console.log("Data extracted, sending");
-	  return res.status(200).send({ data: rows });
+
+	  return res.status(200).send({ data: rows, token: generateAccessToken(rows[0]) });
 	} catch (error) {
 	  console.error("An error occurred while retrieving data: ", error);
 	  return res.status(500).send();

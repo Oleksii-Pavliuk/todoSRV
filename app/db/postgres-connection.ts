@@ -1,4 +1,3 @@
-import { QueryResult } from "pg";
 import Knex, { Knex as KnexType} from 'knex';
 import config from "../config/config";
 import { Config } from "convict";

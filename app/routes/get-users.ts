@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { QueryResult } from "pg";
+
 // Local modules
+import { User } from "../middleware/gen-token"
 import {db } from "../db/postgres-connection"
 
 /* =================
@@ -8,7 +9,12 @@ import {db } from "../db/postgres-connection"
 ================== */
 export async function getUsers(req: Request, res : Response) {
 
-	
+	let user : User = req.body.tokenUser
+	console.log(user)
+	if(!user.admin){
+		return res.sendStatus(403)
+	}
+
 	try {
 	  const rows = await db("users").select('*')
 	  return res.status(200).json(rows);
